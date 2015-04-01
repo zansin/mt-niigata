@@ -1,0 +1,112 @@
+<!DOCTYPE html><$mt:Include module="config"$>
+<html lang="<$mt:BlogLanguage$>" itemscope itemtype="http://schema.org/WebPage">
+<head>
+<meta charset="<$mt:PublishCharset$>">
+<title><$mt:BlogName encode_html="1"$></title>
+<meta name="description" content="<$mt:BlogDescription remove_html="1" encede_html="1"$>">
+<meta name="keywords" content="<$mt:GetVar name="metakeywords"$>">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="shortcut icon" href="<$mt:BlogURL encode_html="1"$>images/favicon.ico">
+<link rel="start" href="<$mt:BlogURL encode_html="1"$>">
+<$mt:CanonicalLink$>
+<!-- Open Graph Protocol -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="<$mt:BlogLanguage setvar="blog_lang"$><mt:If name="blog_lang" eq="ja">ja_JP<mt:Else><$mt:Var name="blog_lang"$></mt:If>">
+<meta property="og:title" content="<$mt:BlogName encode_html="1"$>">
+<meta property="og:url" content="<$mt:BlogURL encode_html="1"$>">
+<meta property="og:description" content="<$mt:BlogDescription remove_html="1" encede_html="1"$>">
+<meta property="og:site_name" content="<$mt:BlogName encode_html="1"$>">
+<meta property="og:image" content="<$mt:BlogURL encode_html="1"$>images/ogimage.png">
+<!-- Microdata -->
+<meta itemprop="description" content="<$mt:BlogDescription remove_html="1" encede_html="1"$>">
+<link itemprop="url" href="<$mt:BlogURL encode_html="1"$>">
+<link itemprop="image" href="<$mt:BlogURL encode_html="1"$>images/ogimage.png">
+<$mt:Include module="common_stylesheet"$>
+<$mt:Include module="common_head_js"$>
+</head>
+
+<mt:SetVarBlock name="thispage">TOP</mt:SetVarBlock>
+<mt:SetVarBlock name="entrycount"><$mt:EntriesCount$></mt:SetVarBlock>
+
+<body id="sitetop">
+<script>
+(function() {
+  var id = location.hash.replace('#', '');
+  if (id) {
+    var div = document.createElement('div'),
+      a = document.createElement('a');
+    a.setAttribute('name', id);
+    div.appendChild(a);
+    document.write(div.innerHTML);
+  }
+})();
+</script>
+<$mt:Include module="header"$>
+
+<section id="mainvisual" id="top">
+  <div class="container">
+    <h2><img src="<$mt:BlogURL encode_html="1"$>images/main-img.png" alt=""></h2>
+    <p id="main-text">MovableType.netデザインテーマ「Simple Product」のデモサイトです！<br />「Simple Product」は1ページ完結＋ニュース更新が可能なレスポンシブウェブデザインを採用したテーマです。</p>
+  </div>
+</section>
+
+<mt:Pages sort_order="ascend">
+<section class="webpages" id="<$mt:PageBasename$>">
+  <div class="container">
+    <h3><$mt:PageTitle encode_html="1"$></h3>
+    <div class="row">
+      <div class="col-sm-12">
+      <$mt:PageBody$>
+      <$mt:PageMore$>
+      </div>
+    </div>
+  </div>
+</section>
+</mt:Pages>
+
+<mt:If name="entrycount" gt="0">
+<section id="top-news">
+  <div class="container">
+    <h3>ニュース</h3>
+    <div class="row">
+    <mt:Entries lastn="4">
+      <a href="<$mt:EntryPermalink$>" class="col-sm-3">
+      <mt:EntryAssets type="image" sort_order="ascend" limit="1">
+        <figure><img src="<$mt:AssetThumbnailURL width="320"$>" alt="<$mt:EntryTitle encode_html="1"$>"></figure>
+      <mt:Else>
+        <figure class="noimage"><span>No image</span></mt:Unless></figure>
+      </mt:EntryAssets>
+        <div class="entry-detail">
+          <h1><$mt:EntryTitle encode_html="1"$></h1>
+          <p class="entry-excerpt"><$mt:EntryExcerpt$></p>
+        </div>
+      </a>
+    </mt:Entries>
+    </div>
+  </div>
+</section>
+</mt:If>
+
+<$mt:Include module="footer"$>
+
+<$mt:Include module="common_bottom_js"$>
+<script src="<$mt:BlogRelativeURL$>js/jquery.tile.min.js"></script>
+<script>
+$(window).load(function(){
+  $('#top-news .col-sm-3').tile(4);
+});
+$(function() {
+  var $body = $('body');
+  $('.navbar-scroll a').smoothScroll({
+    beforeScroll: function() {
+      $body.addClass('smooth-scroll-scrolling');
+    },
+    afterScroll: function() {
+      $body.removeClass('smooth-scroll-scrolling');
+    },
+  });
+});
+</script>
+
+</body>
+</html>
